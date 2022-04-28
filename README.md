@@ -60,3 +60,6 @@
 데코레이터 패턴 -> 새로운 기능 추가 
 
 
+# 실습 
+## 프록시 패턴 적용전 클래스 의존 관계 
+![img.png](src/main/resources/static/img/before_proxy_class.jpg)
