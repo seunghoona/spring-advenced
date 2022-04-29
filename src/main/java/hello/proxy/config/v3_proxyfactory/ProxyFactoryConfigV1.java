@@ -15,7 +15,6 @@ import org.springframework.context.annotation.Configuration;
 @Slf4j
 public class ProxyFactoryConfigV1 {
 
-
     @Bean
     public OrderControllerV1 orderControllerV1(LogTrace logTrace) {
         OrderControllerV1 orderControllerV1 = new OrderControllerV1Impl(orderServiceV1(logTrace));
