@@ -2,6 +2,7 @@ package hello.proxy.config.v2_dynamicproxy;
 
 import hello.proxy.app.v1.*;
 import hello.proxy.config.v2_dynamicproxy.handler.LogTraceBasicHandle;
+import hello.proxy.config.v2_dynamicproxy.handler.LogTraceFilterHandler;
 import hello.proxy.trace.logtrace.LogTrace;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -9,7 +10,9 @@ import org.springframework.context.annotation.Configuration;
 import java.lang.reflect.Proxy;
 
 @Configuration
-public class DynamicProxyBasicConfig {
+public class DynamicProxyFilterConfig {
+
+    private static final String[] PATTERNS = {"request*", "order*", "save*"};
 
     @Bean
     public OrderControllerV1 orderControllerV1(LogTrace logTrace) {
@@ -17,7 +20,7 @@ public class DynamicProxyBasicConfig {
         Class<OrderControllerV1> clazz = OrderControllerV1.class;
         Object o = Proxy.newProxyInstance(clazz.getClassLoader(),
                 new Class[]{clazz},
-                new LogTraceBasicHandle(orderControllerV1, logTrace));
+                new LogTraceFilterHandler(orderControllerV1, logTrace, PATTERNS));
 
         return (OrderControllerV1) o;
     }
@@ -27,7 +30,7 @@ public class DynamicProxyBasicConfig {
         Class<OrderServiceV1> clazz = OrderServiceV1.class;
         Object o = Proxy.newProxyInstance(clazz.getClassLoader(),
                 new Class[]{clazz},
-                new LogTraceBasicHandle(orderServiceV1, logTrace));
+                new LogTraceFilterHandler(orderServiceV1, logTrace, PATTERNS));
         return (OrderServiceV1) o;
     }
 
@@ -38,7 +41,7 @@ public class DynamicProxyBasicConfig {
         Class<OrderRepositoryV1> clazz = OrderRepositoryV1.class;
         Object o = Proxy.newProxyInstance(clazz.getClassLoader(),
                 new Class[]{clazz},
-                new LogTraceBasicHandle(orderRepositoryV1, logTrace)
+                new LogTraceFilterHandler(orderRepositoryV1, logTrace, PATTERNS)
         );
         return (OrderRepositoryV1) o;
     }
