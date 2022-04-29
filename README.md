@@ -112,3 +112,24 @@ ProxyFactory 프록시를 생성
 adviceInvocationHandler 를 처음부터 붙여서 우리가 만든 ADVICE를 실행하게 되어 있다.
 
 
+## 사용방법 
+```java
+  public interface MethodInterceptor extends Interceptor {
+     Object invoke(MethodInvocation invocation) throws Throwable;
+  }
+```
+
+`MethodInvocation invocation`
+- 다음 메서드를 호출하는 방법
+- 현재 프록시 객체 인스턴스,
+- args ,
+- 메서드 정보
+
+## 포인트 컷
+- 어디에 부가 기능을 적용 || 비적용
+- 메소드와 클래스 단위로 필터링한다 
+- point(어느지점) 에서 잘서 추가 기능을 실행할지에 대한 의미를 갖는다.
+## 어드바이스
+
+## 어드바이저
+
