@@ -71,9 +71,36 @@ public class ExecutionTest {
 	
 	@Test
 	@DisplayName("현재 패키지와 하위 패키지 까지 적용")
-	void packageMatch2() {
+	void packageMatchSub() {
 		pointcut.setExpression("execution(* hello.advanced..*.*(..))");
 		Assertions.assertThat(pointcut.matches(helloMethod, MemberServiceImpl.class)).isTrue();
 	}
+
+	@Test
+	void typeExactMatch() {
+		pointcut.setExpression("execution(* hello.advanced.member.MemberServiceImpl.*(..))");
+		Assertions.assertThat(pointcut.matches(helloMethod, MemberServiceImpl.class)).isTrue();
+	}
+	@Test
+	@DisplayName("부모타입으로 매칭이 가능한가? 가능하다.")
+	void typeMatchSuperTypeIsFalse() {
+		pointcut.setExpression("execution(* hello.advanced.member.MemberService.*(..))");
+		Assertions.assertThat(pointcut.matches(helloMethod, MemberServiceImpl.class)).isTrue();
+	}
+
+	@Test
+	@DisplayName("부모타입으로 매칭은 가능하지 부모타입에 있는 메서드만 적용이 가능하게 된다. \n 그렇기에 실패한다.")
+	void typeMatchNoSuperTypeMethodFalse() throws NoSuchMethodException {
+		pointcut.setExpression("execution(* hello.advanced..MemberService.*(..))");
+		Method internalMethod = MemberServiceImpl.class.getMethod("internal", String.class);
+		Assertions.assertThat(pointcut.matches(internalMethod, MemberServiceImpl.class)).isTrue();
+	}
+
+	@Test
+	void typeMatchInternal() {
+		pointcut.setExpression("execution(* hello.advanced.member.MemberService.*(..))");
+		Assertions.assertThat(pointcut.matches(helloMethod, MemberServiceImpl.class)).isTrue();
+	}
+
 
 }
