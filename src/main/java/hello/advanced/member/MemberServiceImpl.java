@@ -1,4 +1,4 @@
-package hello.advanced.jpa.member;
+package hello.advanced.member;
 
 import hello.advanced.jpa.member.annotation.ClassAop;
 import hello.advanced.jpa.member.annotation.MethodAop;

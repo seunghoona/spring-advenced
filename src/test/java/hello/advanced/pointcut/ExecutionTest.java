@@ -1,6 +1,6 @@
 package hello.advanced.pointcut;
 
-import hello.advanced.jpa.member.MemberServiceImpl;
+import hello.advanced.member.MemberServiceImpl;
 import java.lang.reflect.Method;
 import lombok.extern.slf4j.Slf4j;
 import org.junit.jupiter.api.BeforeEach;
@@ -18,12 +18,14 @@ public class ExecutionTest {
 		helloMethod = MemberServiceImpl.class.getMethod("hello", String.class);
 	}
 
-
 	@Test
 	void printMethod() {
 		log.info("helloMethod={}", helloMethod);
 	}
 
-
+	@Test
+	void exactMatch() {
+		pointcut.setExpression("execution(public String hello.advanced.member.MemberServiceImpl.hello())");
+	}
 
 }
